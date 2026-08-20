@@ -129,6 +129,22 @@ class GraphLinkedPolicy(MemoryPolicy):
         )
 
 
+class SeededFaultPolicy(MemoryPolicy):
+    """Deliberately unsafe policy used to validate grader sensitivity."""
+
+    name = "seeded-fault"
+
+    def select(
+        self,
+        case: EvalCase,
+        event: Event,
+        memory: tuple[MemoryRecord, ...],
+        now: datetime,
+    ) -> tuple[MemoryRecord, ...]:
+        suffix = "stale" if case.seed % 2 == 0 else "restricted"
+        return tuple(record for record in memory if record.memory_id.endswith(suffix))
+
+
 def default_policies() -> tuple[MemoryPolicy, ...]:
     return (
         NoMemoryPolicy(),
