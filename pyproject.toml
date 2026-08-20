@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "context-reliability-lab"
+version = "0.1.0"
+description = "Provider-neutral stateful memory evaluation gym"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Julien Pequegnot" }]
+dependencies = [
+  "duckdb>=1.3,<2",
+  "pydantic>=2.11,<3",
+  "typer>=0.16,<1",
+]
+
+[project.scripts]
+context-lab = "context_reliability_lab.cli:app"
+
+[dependency-groups]
+dev = [
+  "hypothesis>=6.130,<7",
+  "pytest>=8.3,<9",
+  "ruff>=0.12,<1",
+]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
