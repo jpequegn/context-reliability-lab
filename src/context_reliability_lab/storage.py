@@ -139,6 +139,14 @@ class RunStore:
         result = RunResult.model_validate_json(row[0])
         return digest(result.model_dump(mode="json")) == row[1]
 
+    def load_grades(self, run_id: str) -> tuple[GraderResult, ...]:
+        rows = self.connection.execute(
+            "SELECT payload FROM grader_results WHERE run_id = ? ORDER BY level", [run_id]
+        ).fetchall()
+        if not rows:
+            raise KeyError(run_id)
+        return tuple(GraderResult.model_validate_json(row[0]) for row in rows)
+
     def export_json(self, run_id: str) -> dict[str, Any]:
         return redact(self.load_run(run_id).model_dump(mode="json"))
 
