@@ -161,6 +161,15 @@ class RunLineage(StrictModel):
     input_digest: str
 
 
+class RunResult(StrictModel):
+    lineage: RunLineage
+    case: EvalCase
+    policy: str
+    transitions: tuple[Transition, ...]
+    answer: Answer
+    final_memory: tuple[MemoryRecord, ...]
+
+
 class Corpus(StrictModel):
     schema_version: str = SCHEMA_VERSION
     cases: tuple[EvalCase, ...]

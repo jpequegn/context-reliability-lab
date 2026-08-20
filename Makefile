@@ -1,7 +1,7 @@
 .PHONY: sync lint format test build check
 
 sync:
-	uv sync --locked --all-groups
+	uv sync --locked --all-groups --no-editable
 
 lint:
 	uv run ruff check .
@@ -17,4 +17,4 @@ test:
 build:
 	uv build
 
-check: lint test build
+check: sync lint test build
