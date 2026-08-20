@@ -8,7 +8,7 @@ generalization, hygiene, and recovery.
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync --locked --all-groups
+uv sync --locked --all-groups --no-editable
 make check
 uv run context-lab version
 ```
@@ -22,4 +22,3 @@ uv run context-lab version
 - Do not generalize benchmark results beyond the tested corpus and harness.
 
 Source project idea: https://github.com/jpequegn/project-ideas/issues/238
-
