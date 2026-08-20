@@ -1,20 +1,23 @@
-.PHONY: sync lint format test build check
+.PHONY: sync lint format test build demo check
 
 sync:
-	uv sync --locked --all-groups --no-editable
+	uv sync --locked --all-groups --no-editable --reinstall-package context-reliability-lab
 
 lint:
-	uv run ruff check .
-	uv run ruff format --check .
+	uv run --no-editable ruff check .
+	uv run --no-editable ruff format --check .
 
 format:
-	uv run ruff check --fix .
-	uv run ruff format .
+	uv run --no-editable ruff check --fix .
+	uv run --no-editable ruff format .
 
 test:
-	uv run pytest
+	uv run --no-editable pytest
 
 build:
 	uv build
+
+demo:
+	uv run --no-editable context-lab demo --output-dir artifacts/demo
 
 check: sync lint test build
